@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SOSLite"
+                  targetNamespace="http://www.sos-lite.com"
+                  xmlns:tns="http://www.sos-lite.com"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd1="http://www.sos-lite.com/sos.xsd"
+                  >
+
+    <!--Types-->
+    <wsdl:types>
+		<xs:schema namespace="http://www.sos-lite.com/sos.xsd"
+			targetNamespace="http://www.sos-lite.com/sos.xsd"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			attributeFormDefault="unqualified">
+            <xs:element name="greeting2" type="xs:string"/>
+        </xs:schema>
+    </wsdl:types>
+
+    <!--Messages-->
+    <wsdl:message name="SayHelloRequest">
+        <wsdl:part name="firstName" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="SayHelloResponse">
+        <wsdl:part name="greeting" type="xsd1:greeting2"/>
+    </wsdl:message>
+
+    <!--Operations-->
+    <wsdl:portType name="SOSLite_PortType">
+        <wsdl:operation name="GetCapabilities">
+            <wsdl:input message="tns:SayHelloRequest"/>
+            <wsdl:output message="tns:SayHelloResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--Bindings-->
+    <wsdl:binding name="SOSLite_Binding" type="tns:SOSLite_PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetCapabilities">
+            <soap:operation soapAction="GetCapabilities"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!--Servicess-->
+    <wsdl:service name="SOSLite_Service">
+        <wsdl:port binding="tns:SOSLite_Binding" name="SOSLite_Port">
+            <soap:address location="http://localhost:8000/SOSLite"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
